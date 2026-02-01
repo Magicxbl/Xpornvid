@@ -1,119 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exclusive Full Video – Complete Article</title>
-<meta name="description" content="Watch the full video with detailed article and context.">
 
 <style>
-body {
-  margin:0;
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  overflow: hidden;
   font-family: Arial, Helvetica, sans-serif;
-  background:#f2f2f2;
-}
-#article {
-  max-width:900px;
-  margin:auto;
-  background:#fff;
-  padding:30px;
-}
-h1 { font-size:30px; margin-bottom:20px; }
-h2 { margin-top:32px; }
-p { line-height:1.9; font-size:16px; margin-bottom:16px; }
-
-button.play-btn {
-  display:block;
-  margin:40px auto;
-  padding:16px 40px;
-  font-size:18px;
-  font-weight:bold;
-  background:#000;
-  color:#fff;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
 }
 
-#videoModal {
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.95);
-  z-index:999;
-  justify-content:center;
-  align-items:center;
+/* CONTAINER */
+#videoContainer {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
 }
-#videoModal video {
-  max-width:90%;
-  max-height:90%;
+
+/* VIDEO */
+#videoPlayer {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  background: #000;
 }
-.ad-banner {
-  width:320px;
-  height:50px;
-  margin:20px auto;
+
+/* PLAY OVERLAY */
+#playOverlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90px;
+  height: 90px;
+  background: rgba(0,0,0,0.6);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 50px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+}
+
+/* IKLAN LANGSUNG TAMPIL */
+.ads {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 }
 </style>
 </head>
-<body oncontextmenu="return false">
 
-<div id="article">
-<h1>Exclusive Full Video Gains Massive Attention Online</h1>
+<body>
 
-<p>
-Many viral videos are often misunderstood due to heavy editing. Watching the full content helps viewers understand the full situation without assumptions.
-</p>
-
- 
-
-<p>
-Responsible viewing is important in the modern digital era. Always watch full content before drawing conclusions.
-</p>
-
-<h2>Why This Video Became Viral</h2>
-<p>
-The video spread organically through private shares before reaching public platforms. Authentic footage often creates stronger engagement and curiosity.
-</p>
-
-<button class="play-btn" data-video="A0Yf65Vh1">▶ Play Full Video</button>
-<button class="play-btn" data-video="X5QsDvl31">▶ Play Another Video</button>
-<button class="play-btn" data-video="6GyhccQe1">▶ Play Video 3</button>
-<button class="play-btn" data-video="1OYHHfpL1">▶ Play Video 4</button>
-
-<p>
-Enjoy the full version and share responsibly!
-</p>
+<div id="videoContainer">
+  <video
+    id="videoPlayer"
+    autoplay
+    muted
+    playsinline
+    preload="auto"
+    controlsList="nodownload noplaybackrate"
+    disablePictureInPicture
+  >
+    <source src="  https://github.com/marisaputrid/cdngood/raw/refs/heads/main/55.mp4  " type="video/mp4">
+    Browser kamu tidak mendukung video.
+  </video>
 </div>
 
-<div id="videoModal">
-<video id="player" controls playsinline controlsList="nodownload noplaybackrate" disablePictureInPicture></video>
+<div id="playOverlay">▶</div>
+
+<!-- IKLAN (TANPA DELAY) -->
+<div class="ads">
+   <a href="https://possessedannihilation.com/g6h7n2s7u?key=5a11a45d48b72c761981549484240f07" class="gif-btn">
+      <img border="0" alt="" src="https://cdn.storageimagedisplay.com/cti/fe/46/8e/fe468e7004f06d7c32fb2c337f7c0b66/1716370395.jpg"  alt="Iklan GIF">
+    </a>
 </div>
 
 <script>
-// modal & video player
-const modal = document.getElementById('videoModal');
-const player = document.getElementById('player');
+const video = document.getElementById('videoPlayer');
+const playBtn = document.getElementById('playOverlay');
 
-document.querySelectorAll('.play-btn').forEach(btn=>{
-  btn.onclick = ()=>{
-    const code = btn.getAttribute('data-video');
-    player.src = "https://cdn.videy.co/"+code+".mp4";
-    modal.style.display = "flex";
-    player.play();
-  }
+/* MATIKAN CONTROLS */
+video.controls = false;
+
+/* KALO AUTOPLAY GAGAL (HP TERTENTU) */
+video.play().catch(() => {
+  playBtn.style.display = 'flex';
 });
 
-modal.onclick = ()=>{
-  player.pause();
-  player.src="";
-  modal.style.display="none";
+/* PLAY MANUAL */
+playBtn.onclick = () => {
+  video.play();
+  playBtn.style.display = 'none';
 };
 
-// block F12
-document.addEventListener("keydown", e=>{
-  if(e.keyCode==123) e.preventDefault();
+/* TAP VIDEO */
+video.onclick = () => {
+  if (video.paused) {
+    video.play();
+    playBtn.style.display = 'none';
+  } else {
+    video.pause();
+    playBtn.style.display = 'flex';
+  }
+};
+
+/* SELESAI */
+video.onended = () => {
+  playBtn.style.display = 'flex';
+};
+
+/* BLOK KLIK KANAN */
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+/* BLOK KEYBOARD */
+document.addEventListener('keydown', e => {
+  const block = [' ', 'k', 'f', 'i', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+  if (block.includes(e.key)) e.preventDefault();
+});
+
+/* KUNCI SPEED */
+video.addEventListener('ratechange', () => {
+  video.playbackRate = 1;
+});
+
+/* MATIKAN PIP */
+video.addEventListener('enterpictureinpicture', () => {
+  document.exitPictureInPicture();
 });
 </script>
 
 </body>
 </html>
+
+<!-- Histats.com  START  (aync)-->
+<script type="text/javascript">var _Hasync= _Hasync|| [];
+_Hasync.push(['Histats.start', '1,4870489,4,0,0,0,00010000']);
+_Hasync.push(['Histats.fasi', '1']);
+_Hasync.push(['Histats.track_hits', '']);
+(function() {
+var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+hs.src = ('//s10.histats.com/js15_as.js');
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+})();</script>
